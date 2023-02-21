@@ -1,0 +1,266 @@
+import { authHeader } from "./auth-header";
+import store from "@/state/store";
+var CryptoJS = require("crypto-js");
+// import axios from "axios";
+// import Swal from "sweetalert2";
+
+export const userService = {
+    login,
+    logout,
+    register,
+    getAll,
+    data() {
+        return {
+            user_email: "",
+        };
+    },
+};
+
+function login(email, password) {
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+    };
+    store.dispatch("screens/clearScreens");
+    //var sanitizedScreens = [];
+    return fetch(window.$http + "AuthManagement/Login", requestOptions)
+        .then(handleResponse)
+        .then((user) => {
+            // axios
+            //     .get(window.$http + `UserRoleScreens/byMail/` + email, {
+            //         headers: { Authorization: `Bearer ${user.token}` },
+            //     })
+            //     .then((response) => {
+            //         let screensData = response.data;
+            //         console.log(screensData);
+            //         let userScreens = screensData.screens.split(",");
+            //         //remove duplicate screens
+            //         for (var j = 0; j < userScreens.length; j++) {
+            //             sanitizedScreens.push(userScreens[j]);
+            //         }
+            //         store.dispatch("screens/loadUserScreens", {
+            //             userScreen: sanitizedScreens,
+            //         });
+            //     })
+            //     .catch((e) => {
+            //         Swal.fire({
+            //             position: "center",
+            //             icon: "error",
+            //             title: "Could not load your Access Screens Contact Admin" + e,
+            //             showConfirmButton: true,
+            //         }).then((e) => {
+            //             Swal.close(e);
+            //         });
+            //     });
+            let accessScreens = [
+                "dashboard",
+                //ProcessPay
+                "ProcessPay",//main
+                "AdvancePay",
+                "LossesDamages",
+                "ExpensesClaims",
+                "RegularEmployees",
+                //sumenu
+                "ViewPayslips",
+                "Processpayroll",
+                //
+                "CasualEmployees",
+                "Consultants",
+                "EmailSlips",
+                "ScheduledSlips",
+                "PrintSlips",
+                //leave
+                "Leave",//main
+                "Applications",
+                "ApplyLeave",
+                "Entitlement",
+                "Logs",
+                "OpeningBalances",
+                "Categories",
+                //attendance
+                "Attendance",//main
+                "ClockInDevices",
+                "EnrollEmployees",
+                "AttendanceLogs",
+                //submenu
+                "DailyLogs",
+                "MonthyLogs",
+                "Overview",
+                //
+                "OverTime",
+                //submenu
+                "ViewOverTime",
+                "AddOverTime",
+                "BulkOvertime",
+                //
+                "Absenteesm",
+                //submenu
+                "ViewAbsenteesm",
+                "AddAbsenteesm",
+                "BulkAbsenteesm",
+                //
+                //Employees
+                "Employees",//main
+                "ViewEmployees",
+                "ManageContacts",
+                "AddEmployess",
+                //submenu
+                "AddEmployee",
+                "ImportEmployee",
+                //
+                "PayRollData",
+                //submenu
+                "BasicPay",
+                "Benefits",
+                "Earnings",
+                "Deductions",
+                "Loans",
+                //
+                "EmployeeData",
+                //submenu
+                "PersonalData",
+                "HRData",
+                "PayData",
+                //
+                "WorkShifts",
+                "TerminateEmployment",
+                //Reports
+                "Reports",//main
+                "PayRollReports",
+                //submenu
+                "MasterRoll",
+                "PayRollSummary",
+                "CustomPayReports",
+                "PayRollGeneralLedger",
+                "PayRollReconciliations",
+                "PayRollTurnOver",
+                "LiabilityReports",
+                //
+                "PayMentReports",//main
+                //submenu
+                "NetPayReports",
+                "AdvancePayments",
+                "ExpenseClaimPayments",
+                //
+                "StatutoryReports",
+                //submenu
+                "KRAReports",
+                "WithHoldingTax",
+                "NHIFReports",
+                "NSSFReports",
+                "NITAReports",
+                //
+                "AttendanceReports",
+                "LeaveReport",
+                "AuditLogs",
+                //settings
+                "Settings",//main
+                "Security",
+                //submenu
+                "Roles",
+                "Users",
+                "PasswordPolicy",
+                "backupDatabase",
+                "systemSettings",
+                //
+                "HRMSettings",
+                //submenu
+                "JobTitles",
+                "Departments",
+                "Regions",
+                "Projects",
+                "WorkersUnions",
+                "WorkShiftSettings",
+                "Holidays",
+                "ESSSettings",
+                //
+                "PayRollSettings",
+                //submenu
+                "Approvals",
+                "Deductions",
+                "Loans",
+                "Benefits",
+                "Earnings",
+                "DefaultSettings",
+                "Formulas",
+                "CustomizePayslip",
+                "Banks",
+                //
+                "ExpenseClaimSettings",
+                "GeneralHR",
+                "MyCompanies",
+                "CurrencyTime",
+                "LookFeel",
+                "Taxes",
+                "APISettings",
+                //submenu
+                "BengoBox",
+                "SMS",
+
+            ];
+            store.dispatch("screens/loadUserScreens", { userScreen: accessScreens });
+
+            // for (var i = 0; i < accessScreens.length; i++) {
+            //     store.dispatch("screens/loadUserScreens", { userScreen: accessScreens[i] });
+            // }
+            let encryptToken = CryptoJS.AES.encrypt(
+                user.token.trim(),
+                "mnopqr",
+            ).toString();
+            if (user.token) {
+                let responseJson = {
+                    id: user.id,
+                    username: email,
+                    name: user.fullname,
+                    email: email,
+                    token: encryptToken,
+                };
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem("user", JSON.stringify(responseJson));
+            }
+            return user;
+        })
+        .then((error) => {
+            return error;
+        });
+}
+
+function logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem("user");
+}
+
+function register(user) {
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+    };
+    return fetch(`/AuthManagement/Register`, requestOptions).then(handleResponse);
+}
+
+function getAll() {
+    const requestOptions = {
+        method: "GET",
+        headers: authHeader(),
+    };
+    return fetch(`/users`, requestOptions).then(handleResponse);
+}
+
+function handleResponse(response) {
+    return response.text().then((text) => {
+        var data = text && JSON.parse(text);
+        if (!response.ok) {
+            //var error = (data && data.message) || response.statusText;
+            if (response.status === 401) {
+                // auto logout if 401 response returned from api
+                logout();
+                location.reload(true);
+            }
+            return Promise.reject(data);
+        }
+        console.log(response);
+        return data;
+    });
+}
