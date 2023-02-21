@@ -1,0 +1,71 @@
+{
+  "Routes": [
+    {
+      "ServiceName": "BengoBox.Auth",
+      "DownstreamPathTemplate": "/api/AuthManagement/{everything}",
+      "UpstreamPathTemplate": "/gateway/auth/AuthManagement/{everything}",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 5
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    },
+    {
+      "ServiceName": "BengoBox.Auth",
+      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/gateway/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ],
+      "authenticationOptions": {
+        "authenticationProviderKey": "JwtBearer",
+        "allowedScopes": [
+        ]
+      },
+      "addClaimsToRequest": {
+      },
+      "routeClaimsRequirement": {
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 5
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    },
+    {
+      "ServiceName": "BengoBox.HRAPI",
+      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/gateway/hr/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "PATCH" ],
+      "authenticationOptions": {
+        "authenticationProviderKey": "JwtBearer",
+        "allowedScopes": [
+        ]
+      },
+      "addClaimsToRequest": {
+      },
+      "routeClaimsRequirement": {
+      },
+      "FileCacheOptions": {
+        "TtlSeconds": 5
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "X-Correlation-Id",
+    "DownstreamScheme": "https",
+    "ReRoutesCaseSensitive": false,
+    "UseServiceDiscovery": true,
+    "AdministrationPath": "/administration",
+    "BaseUrl": "http://localhost:58856",
+    "ServiceDiscoveryProvider": {
+      "Host": "tdbsoftapigateway",
+      "Port": 8761,
+      "Type": "Eureka"
+    }
+  }
+}

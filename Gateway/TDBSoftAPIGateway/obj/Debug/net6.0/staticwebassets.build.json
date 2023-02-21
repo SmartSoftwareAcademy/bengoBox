@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "jnK9h+RwBWXiupprdwA2QSwX6mXCtMx6VIPrz7BvsT8=",
+  "Source": "TDBSoftAPIGateway",
+  "BasePath": "_content/TDBSoftAPIGateway",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

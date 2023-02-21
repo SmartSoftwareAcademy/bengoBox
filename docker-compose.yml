@@ -1,0 +1,106 @@
+version: '3.6'
+
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: steeltoeoss/eurekaserver:latest
+    restart: on-failure
+    hostname: eureka-server
+    networks:
+      - backend_network
+  db:
+    image: mysql:8.0.23
+    #Map port 3306 on the mysql container to port 3306 in the host
+    restart: always
+    ports:
+      - "3306:3306"
+    #Specify where the persisted Data should be stored
+    volumes:
+      - datafiles:/var/lib/mysql
+      #- "~/sql-scripts/setup.sql:/docker-entrypoint-initdb.d/1.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: bengobox
+      ACCEPT_EULA: "Y"
+
+  BengoBoxAuth:
+    container_name: titusdev-bengoboxauth
+    image: titusdev/bengoboxauth:latest
+    restart: on-failure
+    hostname: BengoBoxAuth
+    build:
+      context: .
+      dockerfile: ./Services/BengoBoxAuth/Dockerfile
+      environment:
+        - Logging__LogLevel__Default=Information
+        - DBHOST=db
+        - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "44365:44365"
+    depends_on:
+      - db
+
+    networks:
+      - backend_network
+
+  hrapi:
+    container_name: titusdev-hrapi
+    image: titusdev/hrapi:latest
+    restart: on-failure
+    hostname: hrapi
+    build:
+      context: .
+      dockerfile: ./Services/api/Dockerfile
+    networks:
+      - backend_network
+
+  leaveapi:
+    container_name: titusdev-leaveapi
+    image: titusdev/leaveapi:latest
+    restart: on-failure
+    hostname: leaveapi
+    build:
+      context: .
+      dockerfile: ./Services/leaveapi/Dockerfile
+    networks:
+      - backend_network
+
+  TDBSoftAPIGateway:
+    container_name: titusdev-tdbsoftapigateway
+    image: titusdev/tdbsoftapigateway:latest
+    restart: on-failure
+    hostname: TDBSoftAPIGateway
+    build:
+      context: .
+      dockerfile: ./Gateway/TDBSoftAPIGateway/Dockerfile
+    environment:
+      - Logging__LogLevel__Default=Information
+    ports:
+      - "5168:5168"
+    depends_on:
+      - db
+    networks:
+      - backend_network
+
+  client:
+    container_name: titusdev-bengoboxclient
+    image: titusdev/bengoboxClient:latest
+    restart: on-failure
+    hostname: bengoboxClient
+    build:
+      context: .
+      dockerfile: ./Client/ui/Dockerfile
+      args:
+        VUE_APP_API_URL: https://localhost:44365
+    ports:
+      - "8081:8080"
+    depends_on:
+      - hrapi
+    networks:
+      - frontend_network
+
+networks:
+  backend_network:
+  frontend_network:

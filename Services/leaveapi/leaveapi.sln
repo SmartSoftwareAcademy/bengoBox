@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "leaveapi", "leaveapi.csproj", "{88B66288-C746-466C-9F48-E4925F5FD624}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88B66288-C746-466C-9F48-E4925F5FD624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B66288-C746-466C-9F48-E4925F5FD624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B66288-C746-466C-9F48-E4925F5FD624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B66288-C746-466C-9F48-E4925F5FD624}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39D56230-6E0B-4E0B-9315-34F0BE2D6FB7}
+	EndGlobalSection
+EndGlobal

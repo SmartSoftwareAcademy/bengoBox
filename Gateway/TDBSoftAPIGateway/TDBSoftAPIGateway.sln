@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDBSoftAPIGateway", "TDBSoftAPIGateway.csproj", "{844A1032-183F-4C3C-B98D-50D778F7CCEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{844A1032-183F-4C3C-B98D-50D778F7CCEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844A1032-183F-4C3C-B98D-50D778F7CCEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844A1032-183F-4C3C-B98D-50D778F7CCEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844A1032-183F-4C3C-B98D-50D778F7CCEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E189D819-F213-4BF9-86E3-276BEAE61E8C}
+	EndGlobalSection
+EndGlobal
