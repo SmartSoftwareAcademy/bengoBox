@@ -114,11 +114,18 @@ export default {
     const register = () => {
       errors.value = new signupvalidations(email.value, password.value, newpassword.value, rawPhoneNumber.value).checkValidations();
       console.log(errors.value)
+      console.log(password.value, newpassword.value, password.value.length)
       if (errors.value.length) {
-        Swal.fire(errors.value);
+        Swal.fire({
+          title: "Error on submit!",
+          icon: 'error',
+          html: "<div></li><ul style='color:red;'><li>" + errors.value.email + "</li><li>" + errors.value.password + "</li><li>" + errors.value.phone + "</li></ul></div>",
+          showCancelButton: true,
+          allowOutsideClick: true,
+        });
         return;
       }
-      store.dispatch("auth/[actions] siggnup", {
+      store.dispatch("auth/[actions] signup", {
         username: username.value,
         email: email.value,
         first_name: first_name.value,
@@ -134,6 +141,7 @@ export default {
       errors,
       email,
       password,
+      newpassword,
       username,
       first_name,
       last_name,

@@ -38,13 +38,14 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.is_staff = False
         user.save()
-        roles = Group.objects.filter(name__in=selectedroles)
-        for role in roles:
-            user.groups.add(role)
-        user.save()
+        if selectedroles:
+            roles = Group.objects.filter(name__in=selectedroles)
+            for role in roles:
+                user.groups.add(role)
+            user.save()
+        # Send confirmation email
         config = EmailConfig.objects.first()
         print(config)
-        # Send confirmation email
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
 
@@ -62,7 +63,7 @@ class UserSerializer(serializers.ModelSerializer):
             myemail = EmailMessage(subject=subject, body=message,
                                    from_email=config.from_email, to=[user.email,], connection=backend)
             # schedule in a thread
-            email_thread = threading.Thread(target=myemail.send())
+            email_thread = threading.Thread(target=myemail.send)
             print("Starting email thread..")
             email_thread.start()
             print("Email sent!")

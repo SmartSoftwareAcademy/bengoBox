@@ -37,6 +37,7 @@ export default {
     },
     async [SIGNUP_ACTION]({ commit }, payload) {
         const data = {
+            groups: [],
             username: payload.username,
             email: payload.email,
             first_name: payload.first_name,
@@ -71,7 +72,7 @@ export default {
             }).catch((e) => {
                 Swal.fire({
                     title: 'Error',
-                    icon: 'danger',
+                    icon: 'error',
                     html: e,
                     allowOutsideClick: true,
                     showCancelButton: true,
