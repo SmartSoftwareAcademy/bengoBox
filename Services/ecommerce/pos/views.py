@@ -2,7 +2,7 @@ from pickle import FALSE
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from flask import jsonify
-from product.models import Category, Products, Sales, salesItems
+from product.models import *
 from django.db.models import Count, Sum
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,68 +13,10 @@ import sys
 from datetime import date, datetime
 from django.contrib.auth import get_user_model
 
-
-User = get_user_model()
-# Login
-
-
-def login_user(request):
-    logout(request)
-    resp = {"status": 'failed', 'msg': ''}
-    username = ''
-    password = ''
-    if request.POST:
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                resp['status'] = 'success'
-            else:
-                resp['msg'] = "Incorrect username or password"
-        else:
-            resp['msg'] = "Incorrect username or password"
-    return HttpResponse(json.dumps(resp), content_type='application/json')
-
-# Logout
-
-
-def logoutuser(request):
-    logout(request)
-    return redirect('/')
-
-# Create your views here.
-
-
-@login_required
-def home(request):
-    now = datetime.now()
-    current_year = now.strftime("%Y")
-    current_month = now.strftime("%m")
-    current_day = now.strftime("%d")
-    categories = len(Category.objects.all())
-    products = len(Products.objects.all())
-    transaction = len(Sales.objects.filter(
-        date_added__year=current_year,
-        date_added__month=current_month,
-        date_added__day=current_day
-    ))
-    today_sales = Sales.objects.filter(
-        date_added__year=current_year,
-        date_added__month=current_month,
-        date_added__day=current_day
-    ).all()
-    total_sales = sum(today_sales.values_list('grand_total', flat=True))
-    context = {
-        'page_title': 'Home',
-        'categories': categories,
-        'products': products,
-        'transaction': transaction,
-        'total_sales': total_sales,
-    }
-    return render(request, 'posApp/home.html', context)
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 def about(request):

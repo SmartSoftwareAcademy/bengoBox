@@ -1,25 +1,28 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+import vuetify from '@/plugins/vuetify' // path to vuetify export
+import App from './App'
 import router from './router'
-import store from './store'
+// import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-import CoreuiVue from '@coreui/vue'
-import CIcon from '@coreui/icons-vue'
-import { iconsSet as icons } from '@/assets/icons'
-import DocsExample from '@/components/DocsExample'
-//import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-//set baseurl
-window.$http = "http://localhost:8000/api/";
+// Import Bootstrap and BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-const app = createApp(App)
-app.use(store)
-app.use(router)
-app.use(CoreuiVue)
-app.provide('icons', icons)
-// app.use(BootstrapVue)
-// // Optionally install the BootstrapVue icon components plugin
-// app.use(IconsPlugin)
-app.component('CIcon', CIcon)
-app.component('DocsExample', DocsExample)
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 
-app.mount('#app')
+Vue.config.productionTip = false
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  vuetify,
+  components: { App },
+  template: '<App/>'
+})

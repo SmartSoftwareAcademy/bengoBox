@@ -6,11 +6,11 @@ from product.models import Products
 
 class Cart(models.Model):
     product_id = models.ForeignKey(
-        Products, on_delete=models.SET_NULL, related_name='products',null=True)
+        Products, on_delete=models.SET_NULL, related_name='products', null=True)
     quantity = models.PositiveIntegerField(default=0)
 
     def __str__(self) -> str:
-        return super().__str__()
+        return "{} [{}]".format(self.product_id.name, self.quantity)
 
     class Meta:
         db_table = 'cart'

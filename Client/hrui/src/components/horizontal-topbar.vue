@@ -288,8 +288,8 @@ export default {
                 <img src="@/assets/parking-3.png" alt="" class="" height="150" />
               </span>
               <!-- <span class="logo-lg text-white row">
-                <h1 class="logo-lg text-white mt-4">DHIS2 DM-IL</h1>
-              </span> -->
+                  <h1 class="logo-lg text-white mt-4">DHIS2 DM-IL</h1>
+                </span> -->
             </div>
           </router-link>
         </div>
@@ -330,27 +330,27 @@ export default {
         </b-dropdown>
 
         <!--  <b-dropdown variant="white" right toggle-class="header-item">
-          <template v-slot:button-content>
-            <img class :src="flag" alt="Header Language" height="16" />
-            {{ text }}
-          </template>
-          <b-dropdown-item
-            class="notify-item"
-            v-for="(entry, i) in languages"
-            :key="`Lang${i}`"
-            :value="entry"
-            @click="setLanguage(entry.language, entry.title, entry.flag)"
-            :link-class="{ active: entry.language === current_language }"
-          >
-            <img
-              :src="`${entry.flag}`"
-              alt="user-image"
-              class="me-1"
-              height="12"
-            />
-            <span class="align-middle">{{ entry.title }}</span>
-          </b-dropdown-item>
-        </b-dropdown> -->
+            <template v-slot:button-content>
+              <img class :src="flag" alt="Header Language" height="16" />
+              {{ text }}
+            </template>
+            <b-dropdown-item
+              class="notify-item"
+              v-for="(entry, i) in languages"
+              :key="`Lang${i}`"
+              :value="entry"
+              @click="setLanguage(entry.language, entry.title, entry.flag)"
+              :link-class="{ active: entry.language === current_language }"
+            >
+              <img
+                :src="`${entry.flag}`"
+                alt="user-image"
+                class="me-1"
+                height="12"
+              />
+              <span class="align-middle">{{ entry.title }}</span>
+            </b-dropdown-item>
+          </b-dropdown> -->
 
         <b-dropdown variant="white" class="d-none d-lg-inline-block ms-1" toggle-class="header-item noti-icon" right
           menu-class="dropdown-menu-lg">

@@ -47,7 +47,6 @@ export const bengoboxauthMethods = mapActions("authfack", [
 export const screensMethods = mapActions("screens", [
   "loadUserScreens",
   "loadUserToken",
-  "setBiredirection",
 ]);
 
 export const notificationMethods = mapActions("notification", [
