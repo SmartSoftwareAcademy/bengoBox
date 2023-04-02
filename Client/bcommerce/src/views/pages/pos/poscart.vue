@@ -57,7 +57,7 @@
             </v-card-text>
         </v-card>
         <!--modal mpesa payment-->
-        <b-modal id="modal-mpesa" ref="modal" title="Confirm Payment">
+        <b-modal id="modal-mpesa" ref="modal" title="Confirm Payment" size="lg">
             <form ref="form" @submit.prevent="handleSubmit">
                 <b-form-group label="Transaction Code" label-for="name-input"
                     invalid-feedback="Transaction Code is required">
@@ -65,36 +65,16 @@
                 </b-form-group>
             </form>
         </b-modal>
-        <b-modal id="modal-receipt" ref="modal" title="Confirm Payment">
-            <v-card>
-                <v-card-title>Transaction Receipt</v-card-title>
-                <v-card-text>
-                    <div v-if="transactionCompleted">
-                        <p>Transaction ID: {{ transactionId }}</p>
-                        <p>Transaction Date: {{ new Date() }}</p>
-                        <v-data-table :headers="receiptHeaders" :items="cart" item-key="id">
-                            <template v-slot:[`item.price`]="{ item }">
-                                <div>{{ item.price * item.quantity }}</div>
-                            </template>
-                        </v-data-table>
-                        <div>
-                            <p>Subtotal: {{ total.toFixed(2) / 1.16 }}</p>
-                            <p>VAT (16%): {{ total.toFixed(2) / 1.16 * 0.16 }}</p>
-                            <p>Total: {{ total.toFixed(2) }}</p>
-                            <p>Amount Paid: {{ amountPaid }}</p>
-                            <p>Change: {{ change.toFixed(2) }}</p>
-                        </div>
-                    </div>
-                    <div v-else>Transaction not completed.</div>
-                </v-card-text>
-            </v-card>
+        <b-modal id="modal-receipt" ref="modal" title="Confirm Payment" size="lg" class="">
+            <Receipt :items="cart" :headers="receiptHeaders" :total="Number(total.toFixed(2))"
+                :paymentMethod="paymentMethod" />
         </b-modal>
     </div>
 </template>
 <script>
 // import Multiselect from "vue-multiselect";
 // import "vue-multiselect/dist/vue-multiselect.min.css";
-
+import Receipt from './printReceipt.vue';
 export default {
     name: 'PosCart',
     data() {
@@ -127,6 +107,7 @@ export default {
     },
     components: {
         //Multiselect,
+        Receipt,
     },
     computed: {
         total() {

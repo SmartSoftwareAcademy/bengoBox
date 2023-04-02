@@ -12,6 +12,8 @@ import store from '@/state/store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 import App from './App.vue'
+//import Print from 'v-print';
+
 // As a plugin
 import VueMask from 'v-mask'
 Vue.config.productionTip = false
@@ -20,6 +22,7 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import Lightbox from 'vue-easy-lightbox'
 
 Vue.use(Lightbox)
+//Vue.use(Print);
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyAbvyBxmMbFhrzP9Z8moyYr6dCr-pzjhBE",
